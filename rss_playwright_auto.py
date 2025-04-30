@@ -66,7 +66,7 @@ with sync_playwright() as p:
         print("⚠ 抽出できた情報がありません。HTML構造変更の可能性があります。")
 
     today = datetime.now().strftime("%Y%m%d")
-    rss_path = f"rss_output/drugshortage_feed_{today}.xml"
+    rss_path = f"rss_output/drugshortage.xml"
     generate_rss(items, rss_path)
 
     print(f"\n✅ RSSフィード生成完了！\n📄 保存先: {rss_path}")
