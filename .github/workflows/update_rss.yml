@@ -1,41 +1,39 @@
-# これは GitHub Actions を使って、
-# Pythonスクリプト "rss_playwright_auto.py" を毎時間自動で実行し、
-# RSSフィード (XMLファイル) を生成・コミット・公開するためのYAML設定ファイルです。
-
-name: 自動RSS更新
+name: Update RSS feed every hour
 
 on:
   schedule:
-    - cron: '0 * * * *'  # 毎時00分に実行
-  workflow_dispatch:     # 手動実行も可能
+    - cron: '0 * * * *'  # 毎時0分に実行（UTC時間）
+  workflow_dispatch:      # 手動実行も可
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
+    permissions:
+      contents: write   # GITHUB_TOKEN に push 権限を与える
+
     steps:
-    - name: リポジトリをチェックアウト
-      uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-    - name: Python 3.10 をセットアップ
-      uses: actions/setup-python@v4
-      with:
-        python-version: '3.10'
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: 3.11
 
-    - name: 依存パッケージをインストール
-      run: |
-        pip install playwright feedgen
-        python -m playwright install --with-deps
+      - name: Install dependencies
+        run: |
+          pip install feedgen playwright
+          playwright install chromium
 
-    - name: RSSフィードを生成
-      run: python rss_playwright_auto.py
+      - name: Run RSS generator
+        run: python rss_playwright_auto.py
 
-    - name: 変更をGitにコミット・プッシュ
-      run: |
-        git config --local user.name "github-actions[bot]"
-        git config --local user.email "github-actions[bot]@users.noreply.github.com"
-        git add rss_output/*.xml
-        git commit -m "[bot] Update RSS feed" || echo "No changes to commit"
-        git push
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Commit and push changes
+        run: |
+          git config --local user.name "github-actions[bot]"
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git add rss_output/*.xml
+          git commit -m "[bot] Update RSS feed" || echo "No changes to commit"
+          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
+          git push origin main
