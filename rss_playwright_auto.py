@@ -6,7 +6,7 @@ from playwright.sync_api import sync_playwright, TimeoutError as PlaywrightTimeo
 def generate_rss(items, output_path):
     fg = FeedGenerator()
     fg.title("DSJP｜医療用医薬品供給状況データベース")
-    fg.link(href="https://drugshortage.jp/updatehistory.php")
+    fg.link(href="https://drugshortage.jp/updatehistory.php?date=2025-05-03")
     fg.description("DrugShortage.jpの更新履歴")
     fg.language("ja")
 
