@@ -44,7 +44,7 @@ with sync_playwright() as p:
     page.wait_for_load_state("load", timeout=30000)
 
     print("▶ 医薬品情報を抽出しています...")
-    containers = page.locator("div.card-body > div > div.flex-grow-1 > div.product-title.ms-2 > a")
+    containers = page.locator("div.card-body > div > div.flex-grow-1")
     items = []
     count = containers.count()
     print(f"📦 発見した項目数: {count}")
@@ -59,9 +59,9 @@ with sync_playwright() as p:
     #for i in range(count):
         container = containers.nth(i)
         try:
-            title = container.locator("div:nth-child(2) a").inner_text().strip()
-            link = container.locator("div:nth-child(2) a").get_attribute("href")
-            description = container.locator("div:nth-child(1) div:nth-child(1)").inner_text().strip()
+            title = container.locator("div.product-title.ms-2 > a").inner_text().strip()
+            link = container.locator("div.product-title.ms-2 > a").get_attribute("href")
+            description = container.locator("div.d-flex.flex-row.align-items-center.gap-2.mb-3 > div.status-display > span").inner_text().strip()
             if link and not link.startswith("http"):
                 link = f"https://drugshortage.jp/{link}"
             items.append({"title": title, "link": link, "description": description})
