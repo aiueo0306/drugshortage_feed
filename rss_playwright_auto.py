@@ -46,14 +46,13 @@ with sync_playwright() as p:
     print("▶ 医薬品情報を抽出しています...")
     containers = page.locator("body > div > div > div > div > div > div > div > div > div")
     items = []
+    count = containers.count()
+    print(f"📦 発見した項目数: {count}")
 
     import sys
     print("終了します")
     sys.exit()
     
-    count = containers.count()
-    print(f"📦 発見した項目数: {count}")
-
     for i in range(count):
         container = containers.nth(i)
         try:
