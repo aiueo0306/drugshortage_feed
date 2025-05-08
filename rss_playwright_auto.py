@@ -47,6 +47,10 @@ with sync_playwright() as p:
     containers = page.locator("body > div > div > div > div > div > div > div > div > div")
     items = []
 
+    import sys
+    print("終了します")
+    sys.exit()
+    
     count = containers.count()
     print(f"📦 発見した項目数: {count}")
 
