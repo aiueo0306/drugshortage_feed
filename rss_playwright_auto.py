@@ -52,8 +52,11 @@ with sync_playwright() as p:
     #import sys
     #print("終了します")
     #sys.exit()
+
+    max_items = 1  # 任意の制限
+    for i in range(min(count, max_items)):
     
-    for i in range(count):
+    #for i in range(count):
         container = containers.nth(i)
         try:
             title = container.locator("div:nth-child(2) a").inner_text().strip()
