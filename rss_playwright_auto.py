@@ -49,9 +49,9 @@ with sync_playwright() as p:
     count = containers.count()
     print(f"📦 発見した項目数: {count}")
 
-    import sys
-    print("終了します")
-    sys.exit()
+    #import sys
+    #print("終了します")
+    #sys.exit()
     
     for i in range(count):
         container = containers.nth(i)
