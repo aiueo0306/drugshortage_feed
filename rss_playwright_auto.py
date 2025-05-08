@@ -53,10 +53,10 @@ with sync_playwright() as p:
     #print("終了します")
     #sys.exit()
 
-    max_items = 1  # 任意の制限
-    for i in range(min(count, max_items)):
+    #max_items = 1  # 任意の制限
+    #for i in range(min(count, max_items)):
     
-    #for i in range(count):
+    for i in range(count):
         container = containers.nth(i)
         try:
             title = container.locator("div.product-title.ms-2 > a").inner_text().strip()
