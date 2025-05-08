@@ -61,7 +61,9 @@ with sync_playwright() as p:
         try:
             title = container.locator("div.product-title.ms-2 > a").inner_text().strip()
             link = container.locator("div.product-title.ms-2 > a").get_attribute("href")
-            description = container.locator("div.d-flex.flex-row.align-items-center.gap-2.mb-3 > div.status-display > span").inner_text().strip()
+            description1 = container.locator("div.d-flex.flex-row.align-items-center.gap-2.mb-3 > div.status-display > span").inner_text().strip()
+            description2 = container.locator("div.packaging-unit.small.ms-2").inner_text().strip()
+            description = description1 + " " + description2
             if link and not link.startswith("http"):
                 link = f"https://drugshortage.jp/{link}"
             items.append({"title": title, "link": link, "description": description})
