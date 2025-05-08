@@ -44,7 +44,7 @@ with sync_playwright() as p:
     page.wait_for_load_state("load", timeout=30000)
 
     print("▶ 医薬品情報を抽出しています...")
-    containers = page.locator("body > div > div > div > div > div > div > div > div > div")
+    containers = page.locator("div.card-body > div > div.flex-grow-1 > div.product-title.ms-2 > a")
     items = []
     count = containers.count()
     print(f"📦 発見した項目数: {count}")
